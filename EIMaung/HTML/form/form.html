@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+    <form method="POST" action="form.html">
+        <h1>Form Inputs</h1>
+        <label for="txtName">Name</label><br/>
+        <input type="text" id="txtName" name="txtName" /><br/><br/>
+        <label for="txtEmail">Email</label><br/>
+        <input type="text" id="txtEmail" name="txtEmail" /><br/><br/>
+        <label for="txtAddress">Address</label><br/>
+        <textarea rows="3" id="txtAddress"></textarea><br/><br/>
+        <input type="radio" name="rdoGender" id="rdoMale">
+        <label for="rdoMale">Male</label>
+        <input type="radio" name="rdoGender" id="rdoFamale">
+        <label for="rdoFamale">Female</label><br/><br/>
+        <label for="cboEducation">Highest Education</label><br/>
+        <select name="cboEducation" id="cboEducation">
+            <option selected>--Select Education--</option>
+            <option>High School</option>
+            <option>Bachelor</option>
+            <option>Post Graduate Diploma</option>
+            <option>Master</option>
+            <option>Ph.D</option>
+        </select><br/><br/>
+        <input type="submit" value="send">
+    </form>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - HTML CSS JS</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+        }
+
+        h1{
+            margin: 0 auto 10px auto;
+            text-align: center;
+        }
+
+        .container{
+            display: flex;
+            align-items: stretch;
+        }
+
+        .container div #input{
+            margin-bottom: 10px;
+        }
+
+        .entry{
+        }
+
+        .list{
+            width: 100%;
+        }
+
+        #txtPhone{
+            width: 13rem;
+        }
+
+        label{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: #e47911;
+        }
+
+        input[type="text"],input[type="password"]{
+            width: 20rem;
+            height: 2rem;
+            border: 2px solid #CCCCCC;
+            border-radius: 0.5rem;
+        }
+
+        input[type="text"]:focus,input[type="password"]:focus{
+            border-radius: 0.5rem;
+            outline: none;
+            border: 2px solid #e47911;
+        }
+
+        textarea{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            border-radius: 0.5rem;
+            border: 2px solid #CCCCCC;
+        }
+
+        textarea:focus{
+            outline: none;
+            border-radius: 0.5rem;
+            border: 2px solid #e47911;
+        }
+
+        select{
+            width: 6rem;
+            height: 2rem;
+            margin-right: 0.6rem;
+            border-radius: 0.5rem;
+            border: 2px solid #CCCCCC;
+        }
+
+        select:focus{
+            outline: none;
+            border-radius: 0.5rem;
+            border: 2px solid #e47911;
+        }
+
+        input[type='button']{ 
+            width: 8rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            border:2px solid #000000;
+            outline: none;
+        }
+
+        #butSubmit{
+            margin-left: 2rem;
+        }
+
+        #tblRecords{
+            border-radius: 0.5rem;
+            margin: 0 5px 0 5px;
+        }
+
+    </style>
+    <script>
+        function loadDB(){
+            var month = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
+            var country = new Array("+1","+2","+3","+4","+5","+65","+95");
+            var dob= document.getElementById("divDOB");
+
+            var sday = "<select id='rdoDay'>";
+            var optday = "<option selected>Day</option>";
+            for(var i=1;i<=31;i++){
+                optday += "<option value='"+i+"'>"+i+"</option>";
+            }
+            var eday="</select>";
+
+            var smonth= "<select id='rdoMonth'>";
+            var optmonth =  "<option selected>Month</option>";
+            for(var i=0;i<month.length;i++){
+                optmonth += "<option value='"+month[i]+"'>"+month[i]+"</option>";
+            }
+            var emonth = "</select>";
+
+            var syear= "<select id='rdoYear'>";
+            var optyear =  "<option selected>Year</option>";
+            var date = new Date();
+            for(var i=date.getFullYear();i>=date.getFullYear()-100;i--){
+                optyear += "<option value='"+i+"'>"+i+"</option>";
+            }
+            var eyear = "</select>";
+
+            var sccode="<select id='ccode'>";
+            var optccode = "<option>Code</option>";
+            for(var i=0;i<country.length;i++){
+                optccode += "<option value='"+country[i]+"'>"+country[i]+"</option>";
+            }
+            var eccode ="</select>";
+
+            dob.innerHTML += sday+optday+eday;
+            dob.innerHTML += smonth+optmonth+emonth;
+            dob.innerHTML += syear+optyear+eyear;
+            ccode.innerHTML += sccode+optccode+eccode;
+        }
+
+        function checkKey(e){
+            var charCode = (e.which) ? e.which : e.keyCode;
+            if(charCode > 31 && (charCode <45 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        function clear(){
+            document.getElementById("txtUserName").value = "";
+            document.getElementById("txtPassword").value = "";
+            document.getElementById("txtCPassword").value = "";
+            document.getElementById("txtEmail").value = "";
+            document.getElementById("rdoMale").checked;
+            document.getElementById('rdoDay').value = "Day";
+            document.getElementById('rdoMonth').value = "Month";
+            document.getElementById('rdoYear').value = "Year";
+            document.getElementById('ccode').value = 'Code';
+            document.getElementById('txtPhone').value = "";
+            document.getElementById('txtAddress').value = "";
+        }
+
+        
+
+        function deleRecordAction(id){
+            alert(id);
+        }
+
+
+        function saveAction(){
+            if(document.getElementById("txtUserName").value == ""){
+                alert("User Name shouldn't be blank");
+                document.getElementById("txtUserName").focus();
+                return false;
+            }
+            if(document.getElementById("txtPassword").value == ""){
+                alert("Password shouldn't be blank");
+                document.getElementById("txtPassword").focus();
+                return false;
+            }
+
+            if(document.getElementById("txtCPassword").value == ""){
+                alert("Confirm Password shouldn't be blank");
+                document.getElementById("txtCPassword").focus();
+                return false;
+            }
+
+            if(document.getElementById("txtEmail").value == ""){
+                alert("Email shouldn't be blank");
+                document.getElementById("txtEmail").focus();
+                return false;
+            }else{
+                var letters = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+                if(!document.getElementById("txtEmail").value.match(letters)){
+                    alert("Email Format is wrong.It should be ---@---.---");
+                    document.getElementById("txtEmail").focus();
+                    return false;
+                }
+            }
+
+            if(document.getElementById("rdoDay").value == "Day"){
+                alert("Day should be choose 1 to 31");
+                document.getElementById("rdoDay").focus();
+                return false;
+            }
+            if(document.getElementById("rdoMonth").value == "Month"){
+                alert("Month should be choose Jan to Dec");
+                document.getElementById("rdoMonth").focus();
+                return false;
+            }
+            if(document.getElementById("rdoYear").value == "Year"){
+                alert("Year should be choose 2021 and so on.");
+                document.getElementById("rdoYear").focus();
+                return false;
+            }
+
+            if(document.getElementById("ccode").value == "Code"){
+                alert("Code should be +1 and so on.");
+                document.getElementById("ccode").focus();
+                return false;
+            }
+
+            if(document.getElementById("txtPhone").value == ""){
+                alert("Phone shouldn't be blank");
+                document.getElementById("txtPhone").focus();
+                return false;
+            }
+
+            if(document.getElementById("txtAddress").value == ""){
+                alert("Address shouldn't be blank");
+                document.getElementById("txtAddress").focus();
+                return false;
+            }
+
+            if(document.getElementById("txtPassword").value !== document.getElementById("txtCPassword").value){
+                alert("Password do not match each other");
+                document.getElementById("txtPassword").value = "";
+                document.getElementById("txtCPassword").value = "";
+                document.getElementById("txtPassword").focus();
+                return false;
+            }
+
+            var name = document.getElementById("txtUserName").value;
+            var password = document.getElementById("txtPassword").value;
+            var cpassword = document.getElementById("txtCPassword").value;
+            var email = document.getElementById("txtEmail").value;
+            var gender = document.getElementById("rdoMale").checked ? "Male" : "Female";
+            var dob = document.getElementById('rdoDay').value + "-" + document.getElementById('rdoMonth').value + "-" + document.getElementById('rdoYear').value;
+            var phone = document.getElementById('ccode').value + '-' + document.getElementById('txtPhone').value;
+            var address = document.getElementById('txtAddress').value;
+
+            var tableObj = document.getElementById('tblRecords');
+            var rowsLength = tableObj.rows.length;
+            var row = tableObj.insertRow(Number(rowsLength));
+            var colorCode = rowsLength % 2 === 0 ? "#f2f2f2" : "#CCCCCC";
+
+            var colNo = row.insertCell(0);
+            colNo.innerHTML = '<td>'+rowsLength+'</td>';
+            colNo.style.backgroundColor=colorCode;
+
+            var colUserName = row.insertCell(1);
+            colUserName.innerHTML = "<td>"+name+"</td>";
+            colUserName.style.backgroundColor=colorCode;
+
+            var colPassword = row.insertCell(2);
+            colPassword.innerHTML = "<td>"+password+"</td>";
+            colPassword.style.backgroundColor=colorCode;
+
+            var colEmail = row.insertCell(3);
+            colEmail.innerHTML = "<td>"+email+"</td>";
+            colEmail.style.backgroundColor=colorCode;
+
+            var colGender = row.insertCell(4);
+            colGender.innerHTML = "<td>"+gender+"</td>";
+            colGender.style.backgroundColor=colorCode;
+
+            var colDOB = row.insertCell(5);
+            colDOB.innerHTML = "<td>"+dob+"</td>";
+            colDOB.style.backgroundColor=colorCode;
+
+            var colPhone = row.insertCell(6);
+            colPhone.innerHTML = "<td>"+phone+"</td>";
+            colPhone.style.backgroundColor=colorCode;
+
+            var colAddress = row.insertCell(7);
+            colAddress.innerHTML = "<td>"+address+"</td>"; 
+            colAddress.style.backgroundColor=colorCode;
+
+            var colUpdate = row.insertCell(8);
+            colUpdate.innerHTML = "<td><input type='button' id='butSubmit' name='butSubmit' value='Submit' onclick=''/></td>"; 
+            colUpdate.style.backgroundColor=colorCode;
+
+            var colDelete = row.insertCell(9);
+            colDelete.innerHTML = "<td><input type='button' id='butDelete' name='butDelete' value='Delete' onclick='deleRecordAction(rowsLength)'/></td>";  
+            colDelete.style.backgroundColor=colorCode;
+
+            clear();
+
+            return true;
+        }
+    </script>
+</head>
+<body onload="loadDB();">
+    <div class="container">
+        <form name="frmRegistration">
+            <div class="entry">
+                <h1>Registration Entry</h1>
+                <div id="label">
+                    <label for="txtUserName">User Name</label>
+                </div>
+                <div id="input">
+                    <input type="text" id="txtUserName" name="txtUserName"/>
+                </div>
+        
+                <div id="label">
+                    <label for="txtPassword">Password</label>
+                </div>
+                <div id="input">
+                    <input type="password" id="txtPassword" name="txtPassword"/>
+                </div>
+        
+                <div id="label">
+                    <label for="txtCPassword">Confirm Password</label>
+                </div>
+                <div id="input">
+                    <input type="password" id="txtCPassword" name="txtCPassword"/>
+                </div>
+        
+                <div id="label">
+                    <label for="txtEmail">Email</label>
+                </div>
+                <div id="input">
+                    <input type="text" id="txtEmail" name="txtEmail"/>
+                </div>
+    
+                <div id="label">
+                    <label for="rdoMale">Gender</label>
+                </div>
+                <div id="input">
+                    <input type="radio" id="rdoMale" name="rdoGender" checked/>
+                    <label for="rdoMale">Male</label>
+                    <input type="radio" id="rdofeMale" name="rdoGender"/>
+                    <label for="rdofeMale">Female</label>
+                </div>
+    
+                <div id="label">
+                    <label for="">Date of Birth</label>
+                </div>
+                <div id="input">
+                    <div id="divDOB"></div>
+                </div>
+    
+                <div id="label">
+                    <label for="txtPhone">Phone</label>
+                </div>
+                <div id="input">
+                    <select id="ccode"></select>
+                    <input type="text" id="txtPhone" name="txtPhone" onkeydown="return checkKey(event);"/>
+                </div>
+    
+                <div id="label">
+                    <label for="txtAddress">Address</label>
+                </div>
+                <div id="input">
+                    <textarea id="txtAddress" name="txtAddress" cols="41" rows="10" ></textarea>
+                </div>
+    
+                <div id="input">
+                    <input type="button" id="butSubmit" name="butSubmit" value="Submit" onclick="return saveAction();"/>
+                    <input type="button" id="butCancel" name="butCancel" value="Cancel"/>
+                </div>
+            </div>
+        </form>
+        <div class="list">
+            <h1>Registration List</h1>
+            <table id="tblRecords" width="100%">
+                <tr>
+                    <th style="height: 2rem; background-color: grey;">No.</th>
+                    <th style="height: 2rem; background-color: grey;">User Name</th>
+                    <th style="height: 2rem; background-color: grey;">Password</th>
+                    <th style="height: 2rem; background-color: grey;">Email</th>
+                    <th style="height: 2rem; background-color: grey;">Gender</th>
+                    <th style="height: 2rem; background-color: grey;">DOB</th>
+                    <th style="height: 2rem; background-color: grey;">Phone</th>
+                    <th style="height: 2rem; background-color: grey;">Address</th>
+                    <th style="height: 2rem; background-color: grey;" colspan="2">Actions</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
