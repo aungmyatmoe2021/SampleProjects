@@ -99,8 +99,18 @@
             margin: 0 5px 0 5px;
         }
 
+        .test{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+
     </style>
     <script>
+        var ACTION = 'N';
+        var UPDATE_ID = 0;
         function loadDB(){
             var month = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
             var country = new Array("+1","+2","+3","+4","+5","+65","+95");
@@ -164,8 +174,11 @@
 
         
 
-        function deleRecordAction(id){
-            alert(id);
+        function deleRecordAction(r){
+            if(confirm("Are you sure to delete this record?")){
+                var i = r.parentNode.parentNode.rowIndex;
+                document.getElementById('tblRecords').deleteRow(i);
+            }
         }
 
 
@@ -251,54 +264,98 @@
             var phone = document.getElementById('ccode').value + '-' + document.getElementById('txtPhone').value;
             var address = document.getElementById('txtAddress').value;
 
-            var tableObj = document.getElementById('tblRecords');
-            var rowsLength = tableObj.rows.length;
-            var row = tableObj.insertRow(Number(rowsLength));
-            var colorCode = rowsLength % 2 === 0 ? "#f2f2f2" : "#CCCCCC";
+            if(ACTION == 'N'){
+                var tableObj = document.getElementById('tblRecords');
+                var rowsLength = tableObj.rows.length;
+                var row = tableObj.insertRow(Number(rowsLength));
+                var colorCode = rowsLength % 2 === 0 ? "#f2f2f2" : "#CCCCCC";
 
-            var colNo = row.insertCell(0);
-            colNo.innerHTML = '<td>'+rowsLength+'</td>';
-            colNo.style.backgroundColor=colorCode;
+                var colNo = row.insertCell(0);
+                colNo.innerHTML = "<td><input type='text' id='celNo"+rowsLength+"' value='"+rowsLength+"' style='background-color:"+colorCode+";border:none;width:1rem;' readonly/></td>";
+                colNo.style.backgroundColor=colorCode;
 
-            var colUserName = row.insertCell(1);
-            colUserName.innerHTML = "<td>"+name+"</td>";
-            colUserName.style.backgroundColor=colorCode;
+                var colUserName = row.insertCell(1);
+                colUserName.innerHTML = "<td><input type='text' id='celName"+rowsLength+"' value='"+name+"' style='background-color:"+colorCode+";border:none;width:12rem;' readonly/></td>";
+                colUserName.style.backgroundColor=colorCode;
 
-            var colPassword = row.insertCell(2);
-            colPassword.innerHTML = "<td>"+password+"</td>";
-            colPassword.style.backgroundColor=colorCode;
+                var colPassword = row.insertCell(2);
+                colPassword.innerHTML = "<td><input type='text' id='celPassword"+rowsLength+"' value='"+password+"' style='background-color:"+colorCode+";border:none;width:12rem;' readonly/></td>";
+                colPassword.style.backgroundColor=colorCode;
 
-            var colEmail = row.insertCell(3);
-            colEmail.innerHTML = "<td>"+email+"</td>";
-            colEmail.style.backgroundColor=colorCode;
+                var colEmail = row.insertCell(3);
+                colEmail.innerHTML = "<td><input type='text' id='celEmail"+rowsLength+"' value='"+email+"' style='background-color:"+colorCode+";border:none;width:12rem;' readonly/></td>";
+                colEmail.style.backgroundColor=colorCode;
 
-            var colGender = row.insertCell(4);
-            colGender.innerHTML = "<td>"+gender+"</td>";
-            colGender.style.backgroundColor=colorCode;
+                var colGender = row.insertCell(4);
+                colGender.innerHTML = "<td><input type='text' id='celGender"+rowsLength+"' value='"+gender+"' style='background-color:"+colorCode+";border:none;width:3rem;' readonly/></td>";
+                colGender.style.backgroundColor=colorCode;
 
-            var colDOB = row.insertCell(5);
-            colDOB.innerHTML = "<td>"+dob+"</td>";
-            colDOB.style.backgroundColor=colorCode;
+                var colDOB = row.insertCell(5);
+                colDOB.innerHTML = "<td><div class='test'><input type='text' id='celDay"+rowsLength+"' value='"+ document.getElementById('rdoDay').value +"' style='background-color:"+colorCode+";border:none;width:1rem;display: inline;' readonly/><input class='celText' type='text' id='celMonth"+rowsLength+"' value='"+ document.getElementById('rdoMonth').value +"' style='background-color:"+colorCode+";border:none;width:1.5rem;display: inline;' readonly/><input class='celText' type='text' id='celYear"+rowsLength+"' value='"+ document.getElementById('rdoYear').value +"' style='background-color:"+colorCode+";border:none;width:2rem;display: inline;' readonly/></div></td>";
+                // colDOB.innerHTML = "<td><input type='text' id='celDOB"+rowsLength+"' value='"+dob+"' style='background-color:"+colorCode+";border:none;width:7rem;' readonly/></td>";
+                colDOB.style.backgroundColor = colorCode;
 
-            var colPhone = row.insertCell(6);
-            colPhone.innerHTML = "<td>"+phone+"</td>";
-            colPhone.style.backgroundColor=colorCode;
+                var colPhone = row.insertCell(6);
+                colPhone.innerHTML = "<td><div class='test'><input type='text' id='celCCode"+rowsLength+"' value='"+ document.getElementById('ccode').value +"' style='background-color:"+colorCode+";border:none;width:1.5rem;' readonly/>"+" "+"<input type='text' id='celPhone"+rowsLength+"' value='"+ document.getElementById('txtPhone').value +"' style='background-color:"+colorCode+";border:none;width:5rem;' readonly/></div></td>"
+                // colPhone.innerHTML = "<td><input type='text' id='celPhone"+rowsLength+"' value='"+phone+"' style='background-color:"+colorCode+";border:none;width:7rem;' readonly/></td>";
+                colPhone.style.backgroundColor=colorCode;
 
-            var colAddress = row.insertCell(7);
-            colAddress.innerHTML = "<td>"+address+"</td>"; 
-            colAddress.style.backgroundColor=colorCode;
+                var colAddress = row.insertCell(7);
+                colAddress.innerHTML = "<td><input type='text' id='celAddress"+rowsLength+"' value='"+address+"' style='background-color:"+colorCode+";border:none;width:15rem;' readonly/></td>"; 
+                colAddress.style.backgroundColor=colorCode;
 
-            var colUpdate = row.insertCell(8);
-            colUpdate.innerHTML = "<td><input type='button' id='butSubmit' name='butSubmit' value='Submit' onclick=''/></td>"; 
-            colUpdate.style.backgroundColor=colorCode;
+                var colUpdate = row.insertCell(8);
+                colUpdate.innerHTML = "<td><input type='button' id='butSubmit' name='butSubmit' value='Edit' onclick='editAction("+rowsLength+")'/></td>"; 
+                colUpdate.style.backgroundColor=colorCode;
 
-            var colDelete = row.insertCell(9);
-            colDelete.innerHTML = "<td><input type='button' id='butDelete' name='butDelete' value='Delete' onclick='deleRecordAction(rowsLength)'/></td>";  
-            colDelete.style.backgroundColor=colorCode;
+                var colDelete = row.insertCell(9);
+                colDelete.innerHTML = "<td><input type='button' id='butDelete' name='butDelete' value='Delete' onclick='deleRecordAction(this)'/></td>";  
+                colDelete.style.backgroundColor=colorCode;
+            }
 
+            if(ACTION == 'U'){
+                document.getElementById('celName'+UPDATE_ID).value = document.getElementById('txtUserName').value;
+                document.getElementById('celPassword'+UPDATE_ID).value = document.getElementById('txtPassword').value;
+                document.getElementById('celPassword'+UPDATE_ID).value = document.getElementById('txtCPassword').value;
+                document.getElementById('celEmail'+UPDATE_ID).value = document.getElementById('txtEmail').value;
+                if(document.getElementById('rdoMale').checked)
+                    document.getElementById('celGender'+UPDATE_ID).value=="Male";
+                else
+                    document.getElementById('celGender'+UPDATE_ID).value=="Female";
+                document.getElementById('celDay'+UPDATE_ID).value = document.getElementById('rdoDay').value;
+                document.getElementById('celMonth'+UPDATE_ID).value = document.getElementById('rdoMonth').value;
+                document.getElementById('celYear'+UPDATE_ID).value = document.getElementById('rdoYear').value;
+                document.getElementById('celCCode'+UPDATE_ID).value = document.getElementById('ccode').value;
+                document.getElementById('celPhone'+UPDATE_ID).value = document.getElementById('txtPhone').value;
+                document.getElementById('celAddress'+UPDATE_ID).value = document.getElementById('txtAddress').value;
+                ACTION = 'N';
+                UPDATE_ID = 0;
+                document.getElementById('butSubmit').value='Submit';
+            }
             clear();
 
             return true;
+        }
+
+        function editAction(id){
+            document.getElementById('txtUserName').value = document.getElementById('celName'+id).value;
+            document.getElementById('txtPassword').value = document.getElementById('celPassword'+id).value;
+            document.getElementById('txtCPassword').value = document.getElementById('celPassword'+id).value;
+            document.getElementById('txtEmail').value = document.getElementById('celEmail'+id).value;
+            if(document.getElementById('celGender'+id).value=="Male")
+                document.getElementById('rdoMale').checked;
+            else
+                document.getElementById('rdofeMale').checked;
+            document.getElementById('rdoDay').value = document.getElementById('celDay'+id).value;
+            document.getElementById('rdoMonth').value = document.getElementById('celMonth'+id).value;
+            document.getElementById('rdoYear').value = document.getElementById('celYear'+id).value;
+
+            document.getElementById('ccode').value = document.getElementById('celCCode'+id).value;
+            document.getElementById('txtPhone').value = document.getElementById('celPhone'+id).value;
+            document.getElementById('txtAddress').value = document.getElementById('celAddress'+id).value;
+            ACTION = 'U';
+            UPDATE_ID = id;
+            document.getElementById('butSubmit').value='Update';
         }
     </script>
 </head>
@@ -368,7 +425,7 @@
                 </div>
     
                 <div id="input">
-                    <input type="button" id="butSubmit" name="butSubmit" value="Submit" onclick="return saveAction();"/>
+                    <input type="button" id="butSubmit" name="butSubmit" value="New" onclick="return saveAction();"/>
                     <input type="button" id="butCancel" name="butCancel" value="Cancel"/>
                 </div>
             </div>
